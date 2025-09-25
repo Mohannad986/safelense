@@ -14,16 +14,27 @@ def install_requirements():
         print("Upgrading pip...")
         subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "pip"])
         
-        subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
+        # Install requirements with more verbose output and timeout handling
+        subprocess.check_call([
+            sys.executable, "-m", "pip", "install", 
+            "-r", "requirements.txt", 
+            "--timeout", "300",
+            "--retries", "3"
+        ])
         print("✅ Dependencies installed successfully!")
     except subprocess.CalledProcessError as e:
         print(f"❌ Failed to install dependencies: {e}")
+        print("💡 Try running: pip install -r backend/requirements.txt manually")
+        return False
+    except Exception as e:
+        print(f"❌ Unexpected error during installation: {e}")
         return False
     return True
 
 def start_server():
     """Start the FastAPI server"""
     print("Starting TrustAI backend server...")
+    print("🔗 Server will be available at: http://localhost:8000")
     try:
         subprocess.run([
             sys.executable, "-m", "uvicorn", 
@@ -36,6 +47,8 @@ def start_server():
         print("\n🛑 Server stopped by user")
     except Exception as e:
         print(f"❌ Server error: {e}")
+        print("💡 Make sure port 8000 is not already in use")
+        print("💡 Try running: python backend/app.py directly")
 
 if __name__ == "__main__":
     print("🚀 TrustAI Backend Starting...")
