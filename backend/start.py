@@ -10,6 +10,10 @@ def install_requirements():
     """Install Python requirements"""
     print("Installing Python dependencies...")
     try:
+        # Upgrade pip first to ensure robust dependency installation
+        print("Upgrading pip...")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "pip"])
+        
         subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
         print("✅ Dependencies installed successfully!")
     except subprocess.CalledProcessError as e:
