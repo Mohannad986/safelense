@@ -42,7 +42,7 @@ def start_server():
             "--host", "0.0.0.0", 
             "--port", "8000", 
             "--reload"
-        ])
+        ], stdout=sys.stdout, stderr=sys.stderr)
     except KeyboardInterrupt:
         print("\n🛑 Server stopped by user")
     except Exception as e:
