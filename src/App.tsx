@@ -32,7 +32,7 @@ function App() {
       formData.append('file', file);
 
       // Send to backend API
-      const response = await fetch('http://localhost:8000/analyze', {
+      const response = await fetch('/api/analyze', {
         method: 'POST',
         body: formData,
       });

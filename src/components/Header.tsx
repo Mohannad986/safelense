@@ -15,9 +15,6 @@ const Header: React.FC = () => {
           
           <nav className="hidden md:flex items-center gap-6">
             <a href="#" className="text-gray-300 hover:text-white transition-colors">
-              How it Works
-            </a>
-            <a href="#" className="text-gray-300 hover:text-white transition-colors">
               About
             </a>
             <a href="#" className="text-gray-300 hover:text-white transition-colors">

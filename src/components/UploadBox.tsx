@@ -10,10 +10,18 @@ const UploadBox: React.FC<UploadBoxProps> = ({ onFileUpload }) => {
   const [error, setError] = useState<string>('');
 
   const validateFile = (file: File): boolean => {
-    const validTypes = ['video/mp4', 'video/avi', 'video/mov', 'video/webm', 'video/mkv'];
+    const validTypes = [
+      'video/mp4', 
+      'video/avi', 
+      'video/mov', 
+      'video/webm', 
+      'video/mkv',
+      'video/quicktime',
+      'video/x-msvideo'
+    ];
     const maxSize = 100 * 1024 * 1024; // 100MB
 
-    if (!validTypes.includes(file.type)) {
+    if (!validTypes.includes(file.type) && !file.name.match(/\.(mp4|avi|mov|webm|mkv)$/i)) {
       setError('Please upload a valid video file (MP4, AVI, MOV, WebM, MKV)');
       return false;
     }
