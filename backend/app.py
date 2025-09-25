@@ -33,12 +33,22 @@ av_sync_detector = AVSyncDetector()
 async def startup_event():
     """Initialize models on startup"""
     print("Loading AI models...")
-    await asyncio.gather(
+    results = await asyncio.gather(
         frame_detector.load_model(),
         audio_detector.load_model(),
-        av_sync_detector.load_model()
+        av_sync_detector.load_model(),
+        return_exceptions=True
     )
-    print("All models loaded successfully!")
+    
+    # Log any exceptions without crashing the server
+    model_names = ["frame_detector", "audio_detector", "av_sync_detector"]
+    for i, result in enumerate(results):
+        if isinstance(result, Exception):
+            print(f"Warning: {model_names[i]} failed to load: {result}")
+        else:
+            print(f"{model_names[i]} loaded successfully")
+    
+    print("Server startup completed!")
 
 @app.get("/")
 async def root():
